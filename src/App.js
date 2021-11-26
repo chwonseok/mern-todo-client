@@ -14,6 +14,27 @@ const App = () => {
     setTask(e.target.value);
   };
 
+  // new todo 서버 통해 DB에 저장하기
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    Axios.post('http://localhost:3003/add', {
+      date: date,
+      task: task,
+    });
+  };
+
+  // todos 서버 통해 DB에서 가져오기
+  useEffect(() => {
+    Axios.get('http://localhost:3003/read')
+      .then((response) => {
+        console.log(response);
+        setTodos(response.data);
+      })
+      .catch(() => {
+        alert('ERROR OCCURRED');
+      });
+  }, []);
+
   return (
     <div className="container mx-auto w-2/3 md:w-5/6 sm:w-full mt-40">
       <div className="flex justify-center mb-6">
@@ -26,7 +47,7 @@ const App = () => {
       </h1>
       <div className="flex justify-between mt-10">
         <div className="bg-white rounded-lg shadow-md w-2/5 p-4">
-          <form action="/addtask" method="POST">
+          <form onSubmit={handleSubmit} method="POST">
             <div>
               <label htmlFor="date">Date</label>
               <div className="mb-4">
@@ -57,8 +78,14 @@ const App = () => {
         </div>
         <div className="w-2/5">
           <ul>
-            <li>커피 마시기</li>
-            <li>산책 가기</li>
+            {todos.map((todo) => {
+              return (
+                <li key={todo._id}>
+                  <span>{todo.date} | </span>
+                  <span>{todo.task}</span>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
