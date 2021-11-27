@@ -43,14 +43,14 @@ const App = () => {
 
   return (
     <div className="container mx-auto w-2/3 md:w-5/6 sm:w-full mt-40">
-      <div className="flex justify-center mb-6">
-        <img className="w-24" src="./img/todo-logo.png" alt="logo" />
+      <div className="flex items-center justify-center mb-6">
+        <h1 className="text-center text-4xl font-semibold mr-2">
+          <span className="font-bold text-5xl">G</span>et{' '}
+          <span className="font-bold text-5xl">T</span>hings{' '}
+          <span className="font-bold text-5xl">D</span>one
+        </h1>
+        <img className="w-16" src="./img/todo-logo.png" alt="logo" />
       </div>
-      <h1 className="text-center text-4xl font-semibold">
-        <span className="font-bold text-5xl">G</span>et{' '}
-        <span className="font-bold text-5xl">T</span>hings{' '}
-        <span className="font-bold text-5xl">D</span>one
-      </h1>
       <div className="flex justify-center items-center mt-10">
         <div className="mr-6 bg-white rounded-lg shadow-md w-1/3 p-4">
           <form onSubmit={handleSubmit} method="POST">
