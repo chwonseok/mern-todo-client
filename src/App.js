@@ -20,7 +20,13 @@ const App = () => {
     Axios.post('http://localhost:3003/add', {
       date: date,
       task: task,
-    });
+    })
+      .then(() => {
+        setTodos([...todos, { date: date, task: task }]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   // todos 서버 통해 DB에서 가져오기
@@ -45,8 +51,8 @@ const App = () => {
         <span className="font-bold text-5xl">T</span>hings{' '}
         <span className="font-bold text-5xl">D</span>one
       </h1>
-      <div className="flex justify-between mt-10">
-        <div className="bg-white rounded-lg shadow-md w-2/5 p-4">
+      <div className="flex justify-center items-center mt-10">
+        <div className="mr-6 bg-white rounded-lg shadow-md w-1/3 p-4">
           <form onSubmit={handleSubmit} method="POST">
             <div>
               <label htmlFor="date">Date</label>
@@ -56,6 +62,7 @@ const App = () => {
                   onChange={handleDate}
                   type="date"
                   className="w-4/5 focus:ring-1 rounded-md"
+                  required
                 />
               </div>
             </div>
@@ -68,6 +75,7 @@ const App = () => {
                   type="text"
                   placeholder="task to do"
                   className="w-full focus:ring-1 rounded-md"
+                  required
                 />
               </div>
             </div>
@@ -76,13 +84,18 @@ const App = () => {
             </button>
           </form>
         </div>
-        <div className="w-2/5">
+        <div className="w-1/3">
           <ul>
             {todos.map((todo) => {
               return (
-                <li key={todo._id}>
-                  <span>{todo.date} | </span>
-                  <span>{todo.task}</span>
+                <li
+                  key={todo._id}
+                  className="mb-4 shadow py-2 pl-4 rounded-md cursor-pointer hover:shadow-xl transition"
+                >
+                  <div>
+                    <h2>{todo.date}</h2>
+                    <h2>{todo.task}</h2>
+                  </div>
                 </li>
               );
             })}
