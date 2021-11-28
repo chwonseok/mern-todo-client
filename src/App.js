@@ -44,7 +44,7 @@ const App = () => {
   return (
     <div className="container mx-auto w-2/3 md:w-5/6 sm:w-full mt-40">
       <div className="flex items-center justify-center mb-6">
-        <h1 className="text-center text-4xl font-semibold mr-2">
+        <h1 className="text-center text-4xl font-semibold mr-2 dark:text-white">
           <span className="font-bold text-5xl">G</span>et{' '}
           <span className="font-bold text-5xl">T</span>hings{' '}
           <span className="font-bold text-5xl">D</span>one
@@ -92,9 +92,9 @@ const App = () => {
                   key={todo._id}
                   className="mb-4 shadow py-2 pl-4 rounded-md cursor-pointer hover:shadow-xl transition"
                 >
-                  <div>
+                  <div className="dark:text-white">
                     <h2>{todo.date}</h2>
-                    <h2>{todo.task}</h2>
+                    <h2 className="text-xl">{todo.task}</h2>
                   </div>
                 </li>
               );
