@@ -25,8 +25,8 @@ const App = () => {
       date: date,
       task: task,
     })
-      .then(() => {
-        setTodos([...todos, { date: date, task: task }]);
+      .then((res) => {
+        setTodos([...todos, { _id: res.data._id, date: date, task: task }]);
       })
       .catch((error) => {
         console.log(error);
@@ -51,11 +51,21 @@ const App = () => {
     });
   };
 
+  // Delete
+  const handleDelete = (id) => {
+    Axios.delete(`http://localhost:3003/delete/${id}`).then(() => {
+      setTodos(
+        todos.filter((cur) => {
+          return cur._id !== id;
+        })
+      );
+    });
+  };
+
   // todos 서버 통해 DB에서 가져오기
   useEffect(() => {
     Axios.get('http://localhost:3003/read')
       .then((response) => {
-        console.log(response);
         setTodos(response.data);
       })
       .catch(() => {
@@ -126,7 +136,14 @@ const App = () => {
                       update
                     </button>
                     <br />
-                    <button className={styleBtn('bg-red-500')}>delete</button>
+                    <button
+                      onClick={() => {
+                        handleDelete(todo._id);
+                      }}
+                      className={styleBtn('bg-red-500')}
+                    >
+                      delete
+                    </button>
                   </div>
                 </li>
               );
