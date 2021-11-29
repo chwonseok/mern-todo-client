@@ -1,20 +1,14 @@
 import Axios from 'axios';
 import { useState, useEffect } from 'react';
 
-const Button = ({ children, color }) => {
-  return (
-    <button
-      className={`mt-2 py-0.5 px-2.5 ${color} text-white rounded-lg hover:opacity-80`}
-    >
-      {children}
-    </button>
-  );
-};
-
 const App = () => {
   const [date, setDate] = useState();
   const [task, setTask] = useState();
   const [todos, setTodos] = useState([]);
+
+  const styleBtn = (color) => {
+    return `mt-2 py-0.5 px-2.5 ${color} text-white rounded-lg hover:opacity-80`;
+  };
 
   const handleDate = (e) => {
     setDate(e.target.value);
@@ -37,6 +31,24 @@ const App = () => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  // id를 click할 때 가져온 후 server로 넘기기
+  const handleUpdate = (id) => {
+    const newTask = prompt('Enter the updated task');
+
+    Axios.put('http://localhost:3003/update', {
+      id: id,
+      task: newTask,
+    }).then(() => {
+      setTodos(
+        todos.map((cur) => {
+          return cur._id === id
+            ? { _id: id, date: cur.date, task: newTask }
+            : cur;
+        })
+      );
+    });
   };
 
   // todos 서버 통해 DB에서 가져오기
@@ -89,7 +101,7 @@ const App = () => {
                 />
               </div>
             </div>
-            <Button color="bg-primary">Add</Button>
+            <button className={styleBtn('bg-primary')}>Add</button>
           </form>
         </div>
         <div className="w-1/3">
@@ -98,16 +110,23 @@ const App = () => {
               return (
                 <li
                   key={todo._id}
-                  className="mb-4 shadow py-2 pl-4 rounded-md cursor-pointer hover:shadow-xl transition flex justify-between items-center"
+                  className="mb-4 shadow py-2 pl-4 rounded-md cursor-pointer hover:shadow-xl transition flex justify-between items-center dark:bg-white"
                 >
-                  <div className="dark:text-white">
+                  <div>
                     <h2>{todo.date}</h2>
                     <h2 className="text-xl">{todo.task}</h2>
                   </div>
                   <div className="mr-4">
-                    <Button color="bg-blue-500">update</Button>
+                    <button
+                      onClick={() => {
+                        handleUpdate(todo._id);
+                      }}
+                      className={styleBtn('bg-blue-500')}
+                    >
+                      update
+                    </button>
                     <br />
-                    <Button color="bg-red-500">delete</Button>
+                    <button className={styleBtn('bg-red-500')}>delete</button>
                   </div>
                 </li>
               );
