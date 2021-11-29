@@ -1,6 +1,16 @@
 import Axios from 'axios';
 import { useState, useEffect } from 'react';
 
+const Button = ({ children, color }) => {
+  return (
+    <button
+      className={`mt-2 py-0.5 px-2.5 ${color} text-white rounded-lg hover:opacity-80`}
+    >
+      {children}
+    </button>
+  );
+};
+
 const App = () => {
   const [date, setDate] = useState();
   const [task, setTask] = useState();
@@ -79,9 +89,7 @@ const App = () => {
                 />
               </div>
             </div>
-            <button className="mt-4 py-0.5 px-2.5 bg-primary text-white rounded-lg hover:opacity-80">
-              Add
-            </button>
+            <Button color="bg-primary">Add</Button>
           </form>
         </div>
         <div className="w-1/3">
@@ -90,11 +98,16 @@ const App = () => {
               return (
                 <li
                   key={todo._id}
-                  className="mb-4 shadow py-2 pl-4 rounded-md cursor-pointer hover:shadow-xl transition"
+                  className="mb-4 shadow py-2 pl-4 rounded-md cursor-pointer hover:shadow-xl transition flex justify-between items-center"
                 >
                   <div className="dark:text-white">
                     <h2>{todo.date}</h2>
                     <h2 className="text-xl">{todo.task}</h2>
+                  </div>
+                  <div className="mr-4">
+                    <Button color="bg-blue-500">update</Button>
+                    <br />
+                    <Button color="bg-red-500">delete</Button>
                   </div>
                 </li>
               );
