@@ -74,7 +74,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="container mx-auto w-2/3 md:w-5/6 sm:w-full mt-40">
+    <div className="container mx-auto mt-16 md:mt-30 lg:mt-40">
       <div className="flex items-center justify-center mb-6">
         <h1 className="text-center text-4xl font-semibold mr-2 dark:text-white">
           <span className="font-bold text-5xl">G</span>et{' '}
@@ -83,8 +83,8 @@ const App = () => {
         </h1>
         <img className="w-16" src="./img/todo-logo.png" alt="logo" />
       </div>
-      <div className="flex justify-center items-center mt-10">
-        <div className="mr-6 bg-white rounded-lg shadow-md w-1/3 p-4">
+      <div className="flex flex-col items-center mt-10 lg:flex-row lg:justify-center">
+        <div className="w-5/6 mb-4 bg-white rounded-lg shadow-md lg:mr-6 lg:w-1/3 p-4 h-60">
           <form onSubmit={handleSubmit} method="POST">
             <div>
               <label htmlFor="date">Date</label>
@@ -114,7 +114,7 @@ const App = () => {
             <button className={styleBtn('bg-primary')}>Add</button>
           </form>
         </div>
-        <div className="w-1/3">
+        <div className="w-5/6 lg:w-1/3">
           <ul>
             {todos.map((todo) => {
               return (
